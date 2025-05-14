@@ -1,0 +1,24 @@
+LIBOBJ = read_file.o initialize.o step_size.o gradient_descent.o objective.o recombine.o mutation.o compete.o align.o 
+MAINOBJ = main.o
+
+INCFLAGS = -I../eigen-3.3.9/Eigen/
+#  #CC = ${GPP} ${C_PLATFORM} -ansi -pedantic -Wno-long-long ${C_OPTIONS} $(INCFLAGS)
+CC = ${GPP} ${C_PLATFORM} -ansi -Wno-long-long ${C_OPTIONS} $(INCFLAGS) -std=c++11
+
+.SUFFIXES: .cpp .o
+
+%.o : ../lib/%.cpp
+	        $(CC) $(CFLAGS) -g -o $@ -c $<
+
+%.o : ../main/%.cpp
+	        $(CC) $(CFLAGS) -I ../lib -g -o $@ -c $<
+
+all: AdmixCor
+
+AdmixCor: $(MAINOBJ) $(LIBOBJ)
+	        $(CC) -o $@ $^ 
+
+clean:
+	        rm -f *.o
+
+
